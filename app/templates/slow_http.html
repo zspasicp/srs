@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<div class="container-fluid text-center main-content">
+  <div class="row content">
+    {% include "links.html" %}
+    <div class="col-sm-8 text-left">
+      <h1>Slow HTTP</h1>
+      <p>Slow  HTTP napad  je  DOS  ( Denial  Of  Service ) napad kod kojeg napadač šalje HTTP zahtjeve
+        koji su podijeljeni na male segmente, pri čemu se svaki segment zahtjeva šalje nakon određenog vremena. Server koji obrađuje zahtjeve, čeka da se svaki zahtjev kompletira prije
+          nego što ga uzme u razmatranje. U slučaju da se na ovaj način zauzmu sve konekcije koje nudi serverski connection pool , dolazi do DOS napada. </p>
+        <p>Postoje dva osnovna tipa Slow HTTP napada :
+            <ol>
+        <li>Slow  HTTP  Headers ( Slowloris ) - napad kod kojeg se šalju parcijalna HTTP zaglavlja u intervalima  koji  su  manji  od  vrijednosti idle  timeout-a za dati server. Na taj način serverski resursi ostaju zauzeti dok god ne stigne kompletan zahtjev, pri čemu se to odugovlači nepr ekidnim slanje m HTTP zaglavlja.</li>
+        <li>Slow  HTTP  POST - napad kod kojeg se koriste podaci koji se šalju u okviru POST zahjteva. U zahtjevu je navedena količina podataka koja će biti poslana na server u okviru  POST  zahtjeva.  Napadač  unosi  na  formu  parcijalne  podatke  i  šalje  ih u
+            određenim vremenskim intervalima, držeći tako serverske resurse zauzete. Kada se zauzmu svi dostupni resursi servera, tj. sve konekcije, dolazi do DOS-a.</li>
+    </ol>
+
+    </p>
+      <hr>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
