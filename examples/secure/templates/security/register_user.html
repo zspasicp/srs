@@ -1,0 +1,48 @@
+<head>
+  <link type="text/css" rel="stylesheet" href="../../static/css/style.min.css">
+  <script>
+function goBack() {
+    window.history.back();
+}
+</script>
+</head>
+{% from "security/_macros.html" import render_field_with_errors, render_field %}
+{# set plan = request.args.get('plan', '') #}
+{# set plan_name = request.args.get('plan_name', '') #}
+{# set plan_cost = request.args.get('cost', '') #}
+{# set short_details = request.args.get('details', '') #}
+
+{% block content %}
+{% include "security/_messages.html" %}
+<div class="register_window">
+  <div class="reg_img"><img src="../../static/images/logo.png"></div>
+  <div class="register_screen">
+      <!--<div class="price-section">-->
+        <!--<span class="price-name family-plus">{{ plan_name }} </span> <span class="family-plus family-plus-line"></span> <span class="price">{{ plan_cost }}</span>-->
+        <!--<p class="price-desc"><span class="minus-plus">&#45;&#45;</span> {{short_details}}</p>-->
+      <!--</div>-->
+      <form action="{{ url_for_security('register') }}" method="POST" name="register_user_form">
+          {# register_user_form.plan_id(value=plan) #}
+        {{ register_user_form.hidden_tag() }}
+        {{ render_field_with_errors(register_user_form.email) }}
+        {{ render_field_with_errors(register_user_form.name) }}
+
+        <div class="clearfix">
+           <label for="Gender">Gender</label>
+            <ul class="gander clearfix">
+              <li>{{ register_user_form.is_male() }}</li>
+            </ul>
+          </div>
+        {{ render_field_with_errors(register_user_form.password) }}
+        {% if register_user_form.password_confirm %}
+          {{ render_field_with_errors(register_user_form.password_confirm) }}
+        {% endif %}
+        {{ render_field(register_user_form.submit) }}
+      </form>
+          <div style="display: none;" class="log_reg">
+              {% include "security/_menu.html" %}
+              {% endblock %}
+          </div>
+       <button class="go_back" onclick="goBack()"><< Back to login page</button>
+    </div>
+ </div>
