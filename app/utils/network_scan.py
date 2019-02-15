@@ -75,7 +75,7 @@ The real use for this comes with trying to evade IDS or blending inn with other 
 @param script_default_or_discovery_and_safe - it will load all scripts from the default category, 
 and only the scripts in discovery category that are also in the safe category.
 '''
-def create_scan_command(source_port_number: int,
+def create_scan_command(source_port_number: int = 0,
          TCP_SYN_scan: bool = False,
          UDP_scan: bool = False,
          timing_template: int = 0,
@@ -147,7 +147,7 @@ def create_scan_command(source_port_number: int,
 
 
 if __name__ == '__main__':
-    scan(source_port_number = 53,
+    print(create_scan_command(source_port_number = 53,
         TCP_SYN_scan = True,
         UDP_scan = True,
         timing_template = 4,
@@ -162,4 +162,5 @@ if __name__ == '__main__':
         UDP_to_given_ports = (True, []),
         SCTP_discovery_to_given_ports = (True, []),
         script_default_or_discovery_and_safe = True,
-        target = 'www.test.com')
+        target = 'www.test.com'))
+    print(create_scan_command(target = 'www.test2.com'))
