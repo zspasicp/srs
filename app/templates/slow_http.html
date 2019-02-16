@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
 
 {% block body %}
+<div id="loader" class="loader" style="visibility: hidden"></div>
 <div class="container-fluid text-center main-content">
   <div class="row content">
     {% include "links.html" %}
@@ -18,35 +19,41 @@
 
     </p>
       <hr>
-<form action="/slow_http" method="POST">
+<form action="/slow_http" method="POST" id="my_form">
 <div class="login">
 <div class="login-screen">
 
 <div class="login-form">
 <div class="control-group">
-				<label class="login-field-icon fui-user" for="url_">URL:</label><input type="text" class="login-field" value="" placeholder="" name="url_">
+				<label class="login-field-icon fui-user" for="url_">URL:</label><input type="text" class="login-field" value="" placeholder="www.example.com" name="url_">
 </div>
 <div class="control-group">
+    <label class="login-field-icon fui-lock" for="port">Port: </label>
 				<input type="text" class="login-field" value="" placeholder="80" name="port">
-<label class="login-field-icon fui-lock" for="login-pass"></label></div>
+</div>
   <div class="control-group">
+      <label class="login-field-icon fui-lock" for="workers">Broj workera: </label>
 				<input type="text" class="login-field" value="" placeholder="1000" name="workers">
-<label class="login-field-icon fui-lock" for="login-pass"></label></div>
+</div>
   <div class="control-group">
-				<input type="text" class="login-field" value="" placeholder="10" name="sleep">
-<label class="login-field-icon fui-lock" for="login-pass"></label></div>
+      <label class="login-field-icon fui-lock" for="sleep">Pauza izmedju slanja:</label>
+				<input type="text" class="login-field" value="" placeholder="3" name="sleep">
+</div>
+    <div class="control-group">
+      <label class="login-field-icon fui-lock" for="attack">Trajanje napada:</label>
+				<input type="text" class="login-field" value="" placeholder="30" name="attack">
+</div>
  <div class="control-group">
-    {% with messages = get_flashed_messages() %}
-  {% if messages %}
+  {% if errors %}
     <ul class=flashes>
-    {% for message in messages %}
-      <li>{{ message }}</li>
-    {% endfor %}
+      <li style="color: red">{{ errors }}</li>
     </ul>
   {% endif %}
-{% endwith %}
  </div>
-<input type="submit" value="Attack! :(" class="btn btn-primary btn-large btn-block">
+    <a href="javascript:{}" class="btn btn-primary btn-large btn-block" onclick="attackOnClick()">Attack!
+        <img class="ninja" src="../static/images/ninja.png"/>
+    </a>
+<!--<input type="submit" value="Attack! :(" class="btn btn-primary btn-large btn-block"> -->
 
 </div>
 </div>
@@ -56,5 +63,12 @@
     </div>
   </div>
 </div>
+
+<script>
+function attackOnClick() {
+  document.getElementById('loader').style.visibility = "visible";
+  document.getElementById('my_form').submit();
+}
+</script>
 
 {% endblock %}

