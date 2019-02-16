@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<div class="container-fluid text-center main-content">
+  <div class="row content">
+    <div class="col-sm-8 text-left">
+      <h1>Dobro došli</h1>
+      <p>Pregled korisnickih informacija: </p>
+        <ul>
+            <li>e-mail: {{ current_user.email }}</li>
+            <li>Aktivan: {{ current_user.active }}</li>
+            <li>Kreiran: {{ current_user.confirmed_at }}</li>
+            <li>Uloge:
+                {% for role in current_user.roles %}
+                    {{ role.name }},
+                {% endfor %}
+            </li>
+        </ul>
+        <a class="btn btn-primary" href="{{ url_for('add_user') }}">Dodaj novog korisnika</a>
+      <hr>
+        <h2 class="avatar_font avatar_list">Svi korisnici</h2>
+    <div class="teams">
+        <table class="table">
+          <thead class="thead-light">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Ime</th>
+              <th scope="col">Prezime</th>
+              <th scope="col">e-mail</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for user in users %}
+            <tr>
+              <th scope="row">{{ user.id }}</th>
+              <td>{{ user.first_name }}</td>
+              <td>{{ user.last_name }}</td>
+              <td>{{ user.email }}</td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+    </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

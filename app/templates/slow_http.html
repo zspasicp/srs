@@ -18,6 +18,41 @@
 
     </p>
       <hr>
+<form action="/slow_http" method="POST">
+<div class="login">
+<div class="login-screen">
+
+<div class="login-form">
+<div class="control-group">
+				<label class="login-field-icon fui-user" for="url_">URL:</label><input type="text" class="login-field" value="" placeholder="" name="url_">
+</div>
+<div class="control-group">
+				<input type="text" class="login-field" value="" placeholder="80" name="port">
+<label class="login-field-icon fui-lock" for="login-pass"></label></div>
+  <div class="control-group">
+				<input type="text" class="login-field" value="" placeholder="1000" name="workers">
+<label class="login-field-icon fui-lock" for="login-pass"></label></div>
+  <div class="control-group">
+				<input type="text" class="login-field" value="" placeholder="10" name="sleep">
+<label class="login-field-icon fui-lock" for="login-pass"></label></div>
+ <div class="control-group">
+    {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+ </div>
+<input type="submit" value="Attack! :(" class="btn btn-primary btn-large btn-block">
+
+</div>
+</div>
+</div>
+</form>
+
     </div>
   </div>
 </div>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>SRS projekat</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/style.css') }}">
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+    {% block menu %}{% endblock %}
+</head>
+<body>
+{% from "security/_macros.html" import render_field_with_errors, render_field %}
+{% block body %}
+
+<div class="container">
+        <div class="row justify-content-center align-items-center" style="height:100vh">
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-body">
+                        <form action="{{ url_for_security('login') }}" method="POST" name="login_user_form">
+                          {{ login_user_form.hidden_tag() }}
+                          {{ render_field_with_errors(login_user_form.email, class_="form-control", placeholder='Korisnički e-mail') }}
+                          {{ render_field_with_errors(login_user_form.password, class_="form-control", placeholder='Lozinka') }}
+                          {{ render_field(login_user_form.next) }}
+                          {{ render_field(login_user_form.submit, class_="btn btn-primary", placeholder='Prijavi se') }}
+                      </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}
+
+</body>
+</html>

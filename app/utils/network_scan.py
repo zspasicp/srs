@@ -1,4 +1,4 @@
-
+import subprocess
 
 
 '''
@@ -147,7 +147,7 @@ def create_scan_command(source_port_number: int = 0,
 
 
 if __name__ == '__main__':
-    print(create_scan_command(source_port_number = 53,
+    command1 = create_scan_command(source_port_number = 53,
         TCP_SYN_scan = True,
         UDP_scan = True,
         timing_template = 4,
@@ -162,5 +162,8 @@ if __name__ == '__main__':
         UDP_to_given_ports = (True, []),
         SCTP_discovery_to_given_ports = (True, []),
         script_default_or_discovery_and_safe = True,
-        target = 'www.test.com'))
-    print(create_scan_command(target = 'www.test2.com'))
+        target = '192.168.0.19')
+
+    command2 = create_scan_command(target = '192.168.0.19')
+    proc = subprocess.Popen(command2.split())
+    proc.communicate()

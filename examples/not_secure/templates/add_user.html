@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+
+
+{% from "security/_macros.html" import render_field_with_errors, render_field %}
+{% import 'macros/form.html' as f with context %}
+{% include "security/_messages.html" %}
+
+{% block body %}
+<div class="container" style="padding-top: 50px">
+        <div class="row justify-content-center align-items-center" style="height:100vh">
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-body">
+                        <form action="{{ url_for('add_user') }}" method="POST">
+                          {{ form.hidden_tag() }}
+                          {{ render_field_with_errors(form.email, class_="form-control", placeholder='Korisnički e-mail') }}
+                          {{ render_field_with_errors(form.first_name, class_="form-control", placeholder='Ime') }}
+                          {{ render_field_with_errors(form.last_name, class_="form-control", placeholder='Prezime') }}
+                          {% call f.form_group(form.role, css_class='sm-margin-bottom') %}
+                          {% endcall %}
+                          {{ render_field_with_errors(form.active, class_="") }}
+
+                        {{ render_field_with_errors(form.password_, class_="form-control", placeholder='Lozinka') }}
+                        {% if form.confirm %}
+                          {{ render_field_with_errors(form.confirm, class_="form-control", placeholder='Potvrdi lozinka') }}
+                        {% endif %}
+                            <button type="submit" class="btn btn-primary">
+                            Kreiraj
+                          </button>
+                      </form>
+                        <br>
+                        <button class="btn btn-primary" onclick="goBack()"><< Nazad</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
