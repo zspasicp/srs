@@ -3,7 +3,7 @@ from utils.levenshtein_distance import similarity
 from collections import OrderedDict
 from bs4 import BeautifulSoup
 
-injection_patterns = ["'", "'or1=1;#", "'or1=1;--"]
+injection_patterns = ["' or 1=1;--", "'", "'or1=1;#"]
 
 initial_vulnerable_key_words = ['sql', 'database', 'odbc']
 
@@ -56,8 +56,11 @@ def inject_form(url: str, vulnerable_key_word: list, html_origin: str):
     for ip in injection_patterns:
         data = {}
         for i in inputs:
-            data[i] = ip
-        resp = req.post(form.get('action'), data=data)
+            data[i.get("name")] = ip
+        action = form.get('action', "")
+        if action.startswith("/"):
+            action = "%s%s" % (url, action)
+        resp = req.post(action, data=data)
         html2 = resp.text
         for kw in vulnerable_key_word:
             if kw in html2:
@@ -89,7 +92,7 @@ def sql_injection_attack(url: str):
             vulnerable_key_word.append(kw)
     
     ret = inject_url(url, vulnerable_key_word, html_origin)
-    if(ret is None)
+    if(ret is None):
         ret = inject_form(url, vulnerable_key_word, html_origin)
     return ret
 

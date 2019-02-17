@@ -21,12 +21,15 @@ def create_app():
 
     @app.route('/sql_injection', methods=['GET', 'POST'])
     def sql_injection():
-        from utils.sql_injection import test_for_eql_injection
+        from utils.sql_injection import sql_injection_attack
         if request.method == 'GET':
             return render_template('sql_injection.html')
         else:
             try:
-                result = test_for_eql_injection()
+                url_ = request.form['url_']
+                if "http" not in url_:
+                    url_ = "http://%s" % url_
+                result = sql_injection_attack(url_)
             except:
                 result = "Greska prilikom testiranja! Molimo Vas da provjerite da li je dati URL ispravan."
             return render_template('sql_injection.html', result=result)
