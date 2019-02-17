@@ -6,6 +6,7 @@ from flask import (
     )
 from time import sleep
 import threading
+import os
 
 
 def create_app():
@@ -19,12 +20,54 @@ def create_app():
 
     @app.route('/scanning', methods=['GET', 'POST'])
     def scanning():
-        return render_template('scanning.html')
+        from utils.network_scan import create_scan_command
+        from utils.xml2html import create_html
+        import subprocess
+        if request.method == 'GET':
+            return render_template('scanning.html')
+        else:
+            url_ = request.form['url_']
+            if url_ is None or len(url_) == 0:
+                return render_template('scanning.html', errors='Empty URL given')
+            option = request.form['option']
+            command = None
+            if option == 'quick_plus':
+                command = create_scan_command(enable_version_detection=True,
+                                              enable_OS_detection=True,
+                                              target=url_)
+                command = command.split()
+                command.append('-T4')
+                command.append('-F')
+                command.append('--version-light')
+            elif option == 'ping':
+                command = create_scan_command(target=url_)
+                command = command.split()
+                command.append('-sn')
+            elif option == 'quick':
+                command = create_scan_command(target=url_)
+                command = command.split()
+                command.append('-T4')
+                command.append('-F')
+            else:
+                command = create_scan_command(target=url_)
+                command = command.split()
+            try:
+                pass
+                proc = subprocess.Popen(command)
+                proc.communicate()
+            except:
+                return render_template('scanning.html', errors='Unable to perform scanning')
+            with open(os.path.join('output', url_), 'rb') as f:
+                data = f.read()
+                html_data = create_html(data)
+                html_data = html_data.replace("b'", "").replace("\\n", "\n")
+                return html_data
+            return render_template('scanning.html')
 
 
     @app.route('/slow_http', methods=['GET', 'POST'])
     def slow_http():
-        from utils.slow_http import start_slow_http_attack, check_if_url_is_valid, stop_slow_http_attack
+        from utils.slow_http import start_slow_http_attack, check_if_url_is_valid
         if request.method == 'GET':
             return render_template('slow_http.html')
         else:
@@ -59,8 +102,6 @@ def create_app():
                     last_ = 30
             except:
                 last_ = 30
-
-
             try:
                 t = threading.Thread(target=start_slow_http_attack, args=[url_, port, workers_, sleep_])
                 t.start()

@@ -135,7 +135,23 @@ width: 250px;
 transition: border .5s;
 }
 
+select {
+text-align: center;
+background-color: #ECF0F1;
+border: 2px solid transparent;
+border-radius: 3px;
+font-size: 16px;
+font-weight: 200;
+padding: 10px 0;
+width: 250px;
+transition: border .5s;
+}
+
 input:focus {
+border: 2px solid #3498DB;
+box-shadow: none;
+}
+select:focus {
 border: 2px solid #3498DB;
 box-shadow: none;
 }
@@ -200,6 +216,7 @@ position: absolute;
 top: 50%;
 left: 50%;
 margin: -50px 0px 0px -50px;
+z-index:1000;
 }
 
 

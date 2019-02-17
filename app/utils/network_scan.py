@@ -142,7 +142,7 @@ def create_scan_command(source_port_number: int = 0,
     if(script_default_or_discovery_and_safe):
         command += ' --script \"default or (discovery and safe)\"'
     if(target is not None):
-        command += ' -oX %s %s' %(target, target)
+        command += ' -oX output/%s %s' %(target, target)
     return command
 
 
