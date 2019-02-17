@@ -5,6 +5,11 @@ injection_patterns = ["'", "'or1=1;#"]
 
 initial_vulnerable_key_words = ['sql', 'database', 'odbc']
 
+
+def test_for_eql_injection():
+    return "RESULT of SQL injection"
+
+
 def inject_url(url: str):
     vulnerable_key_word = []
     resp = req.get(url)

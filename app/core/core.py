@@ -18,6 +18,20 @@ def create_app():
     def home():
         return render_template('index.html')
 
+
+    @app.route('/sql_injection', methods=['GET', 'POST'])
+    def sql_injection():
+        from utils.sql_injection import test_for_eql_injection
+        if request.method == 'GET':
+            return render_template('sql_injection.html')
+        else:
+            try:
+                result = test_for_eql_injection()
+            except:
+                result = "Greska prilikom testiranja! Molimo Vas da provjerite da li je dati URL ispravan."
+            return render_template('sql_injection.html', result=result)
+
+
     @app.route('/scanning', methods=['GET', 'POST'])
     def scanning():
         from utils.network_scan import create_scan_command

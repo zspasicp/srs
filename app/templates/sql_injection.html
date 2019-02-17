@@ -1,0 +1,58 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<div id="loader" class="loader" style="visibility: hidden"></div>
+<div class="container-fluid text-center main-content">
+  <div class="row content">
+    {% include "links.html" %}
+    <div class="col-sm-8 text-left">
+      <h1>SQL Injection</h1>
+<form action="/sql_injection" method="POST" id="my_form">
+<div class="login">
+<div class="login-screen">
+
+<div class="login-form">
+<div class="control-group">
+<label class="login-field-icon fui-user" for="url_">URL:</label><input type="text" class="login-field" value="" placeholder="www.example.com" name="url_">
+</div>
+ <div class="control-group">
+  {% if errors %}
+    <ul class=flashes>
+      <li style="color: red">{{ errors }}</li>
+    </ul>
+  {% endif %}
+ </div>
+    <a href="javascript:{}" class="btn btn-primary btn-large btn-block" onclick="testOnClick()">Testiraj
+        <img class="ninja" src="../static/images/injection.png"/>
+    </a>
+<!--<input type="submit" value="Attack! :(" class="btn btn-primary btn-large btn-block"> -->
+
+</div>
+</div>
+</div>
+</form>
+
+    </div>
+  </div>
+</div>
+{% if result %}
+
+<div class="container-fluid text-center main-content">
+  <div class="row content">
+    <div class="col-sm-8 text-left">
+        <hr>
+      <h1>Rezultati skeniranja:</h1>
+      <p>{{ result }}</p>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+<script>
+function testOnClick() {
+  document.getElementById('loader').style.visibility = "visible";
+  document.getElementById('my_form').submit();
+}
+</script>
+
+{% endblock %}
